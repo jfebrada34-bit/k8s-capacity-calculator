@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "prod_cpu_req": 128000,
+    "nonprod_cpu_req": 6000,
+    "standard_pod_cpu": 1000,
+    "standard_pod_memory": 4096
+  },
+  "pricing": {
+    "S": { "cpu_max": 8, "monthly": 413.46 },
+    "M": { "cpu_max": 16, "monthly": 583.84 },
+    "L": { "cpu_max": 32, "monthly": 1102.56 },
+    "XL": { "cpu_max": 64, "monthly": 2205.12 }
+  }
+}

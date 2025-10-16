@@ -1,0 +1,200 @@
+[
+  {
+    "approver": "Abi Baltazar",
+    "tribes": {
+      "funds": [
+        "bank_cashin",
+        "bank_transfer",
+        "offline_cico",
+        "p2p_and_padala",
+        "funds_runway",
+        "funds_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Anna Mactal",
+    "tribes": {
+      "b2c": [
+        "buyload",
+        "bills_pay",
+        "cards",
+        "mini_program",
+        "asap",
+        "payment_innov",
+        "industry",
+        "mobility",
+        "b2c_ktlo"
+      ],
+      "b2b": [
+        "merchant_onboard",
+        "merchant_wallet",
+        "merchant_core",
+        "acquiring_and_devices",
+        "online_webpay",
+        "offline",
+        "p3fds",
+        "integ_solutions",
+        "sales_systems",
+        "gpo",
+        "b2b_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Don Escuro",
+    "tribes": {
+      "trust_and_security": [
+        "frontend_security",
+        "bizops_security",
+        "cybersecurity_vulnerability_and_int_threat_mgt",
+        "risk_engine",
+        "zero_trust",
+        "trust_and_security_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Ferdinand Escalona",
+    "tribes": {
+      "segments": [
+        "gcash_jr",
+        "international_account",
+        "direct_intl_cashin",
+        "intl_remittance",
+        "intl_payments",
+        "new_segments",
+        "segments_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Lei Mirabel",
+    "tribes": {
+      "strat_initiatives": [
+        "business_transformation",
+        "mergers_and_acquisition",
+        "research_and_development",
+        "special_projects"
+      ]
+    }
+  },
+  {
+    "approver": "Lloyd Calvario",
+    "tribes": {
+      "customer_and_integration": [
+        "account_reg",
+        "account_mgt",
+        "usage_and_gamification",
+        "money_and_transaction_manager",
+        "gchat",
+        "gcash_lite__offline",
+        "personalization_and_analytics",
+        "content_mgmt",
+        "customer_and_integration_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Oyo Aguirre",
+    "tribes": {
+      "new_biz": [
+        "adtech",
+        "voucher_and_promo_solutions",
+        "adtech_innovations",
+        "crm",
+        "identity_solutions",
+        "scoring_solutions",
+        "ginsure",
+        "gforest_and_communities",
+        "loyalty",
+        "new_biz_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Paul Enriquez",
+    "tribes": {
+      "wealth": [
+        "gsave",
+        "gfunds",
+        "gstocks",
+        "blockchain_tech",
+        "embed",
+        "unification",
+        "wealth_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Paul Robert Te",
+    "tribes": {
+      "lending": [
+        "gcredit",
+        "fuse_products",
+        "lending_mgt_system",
+        "lending_as_a_service",
+        "partner_integration",
+        "loan_ops",
+        "credit_risk",
+        "collections",
+        "lending_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Peewee Bundang",
+    "tribes": {
+      "grc": [
+        "transaction_monitoring",
+        "sanction_screening_and_risk_profiling",
+        "data_privacy",
+        "enterprise_risk",
+        "kyc_operations",
+        "kyc_runway",
+        "kym_services",
+        "grc_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Ronnel Go",
+    "tribes": {
+      "data": [
+        "data_mgt_operations",
+        "gen_services_analytics_and_enablement",
+        "ai_and_ml",
+        "data_productization",
+        "data_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Titus Cruz",
+    "tribes": {
+      "enterprise_svcs": [
+        "wallet_operations",
+        "finance_transform",
+        "cxm",
+        "hr_legal",
+        "emx_ess_stratgovernance",
+        "acoe_rpa",
+        "es_ktlo"
+      ]
+    }
+  },
+  {
+    "approver": "Will Choi",
+    "tribes": {
+      "technology": [
+        "it_operations",
+        "infrastructure",
+        "enterprise_architecture",
+        "architecture_runway",
+        "gcash_in_a_box",
+        "app_modernization",
+        "tech_ktlo"
+      ]
+    }
+  }
+]
