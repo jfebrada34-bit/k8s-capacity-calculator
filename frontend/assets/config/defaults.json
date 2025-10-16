@@ -1,0 +1,13 @@
+{
+  "prod": {
+    "cpu": 64,
+    "memory": "256Gi",
+    "storage": "1Ti"
+  },
+  "nonprod": {
+    "cpu": 16,
+    "memory": "64Gi",
+    "storage": "256Gi"
+  },
+  "dev": "nonprod"
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kubernetes Capacity Calculator</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Finalize Cost Modal -->
+  <div class="modal fade" id="finalizeModal" tabindex="-1" aria-labelledby="finalizeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="finalizeModalLabel">Finalize Cost Summary</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 class="fw-bold mb-3">Namespace Table:</h6>
+          <div class="table-responsive mb-4">
+            <table class="table table-bordered table-sm align-middle" id="finalizeTable">
+              <thead class="table-light">
+                <tr>
+                  <th>ClusterName</th>
+                  <th>Provisioner</th>
+                  <th>PDB</th>
+                  <th>EksVer</th>
+                  <th>Namespace</th>
+                  <th>Total CPU</th>
+                  <th>30% Buffer</th>
+                  <th>Node Count</th>
+                  <th>Monthly Cost</th>
+                  <th>Annual Cost</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <h6 class="fw-bold mb-2">Cost Estimate & Request Details</h6>
+          <div id="finalizeDetails" class="mb-4"></div>
+
+          <h6 class="fw-bold mb-2 text-danger">
+            Tags | Please use the specific stated tags upon firing up the resources (case‑sensitive):
+          </h6>
+          <div class="row g-2">
+            <div class="col-md-4"><strong>Tribe:</strong> <span id="tagTribe"></span></div>
+            <div class="col-md-4"><strong>Squad:</strong> <span id="tagSquad"></span></div>
+            <div class="col-md-4"><strong>Approver:</strong> <span id="tagApprover"></span></div>
+            <div class="col-md-4"><strong>Platform:</strong> <span id="tagPlatform"></span></div>
+            <div class="col-md-4"><strong>Product Owner:</strong> <span id="tagPO"></span></div>
+            <div class="col-md-4"><strong>System Owner:</strong> <span id="tagSO"></span></div>
+            <div class="col-md-4"><strong>SR Tag:</strong> <span id="tagSR"></span></div>
+            <div class="col-md-8"><strong>Description:</strong> <span id="tagDesc"></span></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid py-4">
+    <div class="mb-3">
+      <h2>⚡ Kubernetes Capacity Calculator</h2>
+    </div>
+
+    <div class="row g-4">
+      <!-- LEFT: Calculator -->
+      <div class="col-lg-8">
+        <div class="card-custom">
+
+          <!-- Cluster Info -->
+          <div class="mb-3">
+            <div class="form-section-title">Cluster Info</div>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="envMain">Environment</label>
+                <select id="envMain" class="form-select">
+                  <option value="prod">prod</option>
+                  <option value="nonprod" selected>nonprod</option>
+                  <option value="uat">uat</option>
+                  <option value="sit">sit</option>
+                  <option value="test">test</option>
+                  <option value="sandbox">sandbox</option>
+                  <option value="dev">dev</option>
+                </select>
+                <div class="small text-muted mt-1">Defaults auto-populate per environment.</div>
+              </div>
+
+              <div class="col-md-3">
+                <label for="cluster">Cluster Name</label>
+                <input id="cluster" class="form-control" placeholder="cluster name" />
+              </div>
+
+              <div class="col-md-3">
+                <label for="namespace">Namespace</label>
+                <input id="namespace" class="form-control" placeholder="namespace" />
+              </div>
+
+              <div class="col-md-3">
+                <label for="pods">Number of Pods</label>
+                <input id="pods" type="number" min="1" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Resource Requests -->
+          <div class="mb-3">
+            <div class="form-section-title">Resource Requests</div>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="cpu_req">CPU Request (m)</label>
+                <input id="cpu_req" type="number" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label for="mem_req">Mem Request (MB)</label>
+                <input id="mem_req" type="number" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label for="cpu_lim">CPU Limit (m)</label>
+                <input id="cpu_lim" type="number" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label for="mem_lim">Mem Limit (MB)</label>
+                <input id="mem_lim" type="number" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- HPA Settings -->
+          <div class="mb-3">
+            <div class="form-section-title">HPA Settings</div>
+            <div class="row g-3">
+              <div class="col-md-2">
+                <label for="hpa_min">HPA Min</label>
+                <input id="hpa_min" type="number" min="1" class="form-control" />
+              </div>
+              <div class="col-md-2">
+                <label for="hpa_max">HPA Max</label>
+                <input id="hpa_max" type="number" min="1" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label for="cpu_trigger">CPU Trigger</label>
+                <input id="cpu_trigger" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Istio Settings -->
+          <div class="mb-3">
+            <div class="form-section-title">Istio Settings</div>
+            <div class="row g-3">
+              <div class="col-md-2">
+                <label for="istio">Istio</label>
+                <select id="istio" class="form-select">
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="istio_cpu_req">Istio CPU Req (m)</label>
+                <input id="istio_cpu_req" type="number" class="form-control" />
+              </div>
+              <div class="col-md-3">
+                <label for "istio_cpu_lim">Istio CPU Lim (m)</label>
+                <input id="istio_cpu_lim" type="number" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label for="istio_mem_req">Istio Mem Req (MB)</label>
+                <input id="istio_mem_req" type="number" class="form-control" />
+              </div>
+              <div class="col-md-4 mt-2">
+                <label for="istio_mem_lim">Istio Mem Lim (MB)</label>
+                <input id="istio_mem_lim" type="number" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end gap-2 mt-3">
+            <button id="btnFinalize" type="button" class="btn btn-success" onclick="finalizeCost()">💰 Finalize Cost</button>
+            <button id="btnAdd" type="button" class="btn btn-primary">➕ Add Namespace</button>
+            <button id="btnReset" type="button" class="btn btn-danger">🔄 Reset Table</button>
+          </div>
+        </div>
+
+        <!-- Results placeholder -->
+        <div id="results-section"></div>
+      </div>
+
+      <!-- RIGHT: Tags / Metadata + Cost / SR + Description -->
+      <div class="col-lg-4">
+        <div class="accent-card">
+          <h5 class="mb-3" style="font-weight:500;">🏷️ Tags / Metadata</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="metaEnv">Environment</label>
+              <select id="metaEnv" class="form-select">
+                <option value="uat">UAT</option>
+                <option value="sit">SIT</option>
+                <option value="preprod">Preprod</option>
+                <option value="production">Production</option>
+                <option value="dev">Dev</option>
+                <option value="sandbox">Sandbox</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="envGroup">Env Group</label>
+              <input id="envGroup" class="form-control" placeholder="Auto" readonly />
+            </div>
+            <div class="col-md-6">
+              <label for="tribe">Tribe</label>
+              <input id="tribe" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="squad">Squad</label>
+              <input id="squad" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="approver">Approver</label>
+              <input id="approver" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="platform">Platform</label>
+              <input id="platform" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="productOwner">Product Owner</label>
+              <input id="productOwner" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="systemOwner">System Owner</label>
+              <input id="systemOwner" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="accent-card">
+          <h5 class="mb-3" style="font-weight:500;">🧾 Cost / SR Details</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="mtsId">MTS-ID</label>
+              <input id="mtsId" class="form-control" placeholder="MTS-ID" />
+            </div>
+            <div class="col-md-6">
+              <label for="costEstimate">Cost Estimate</label>
+              <input id="costEstimate" class="form-control" placeholder="Enter estimate" />
+            </div>
+            <div class="col-md-6">
+              <label for="requestForm">Request Form</label>
+              <select id="requestForm" class="form-select">
+                <option value="validation">Validation</option>
+                <option value="validated">Validated</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="duration">Duration</label>
+              <input id="duration" class="form-control" placeholder="Enter months" />
+            </div>
+            <div class="col-md-6">
+              <label for="targetDate">Target Fire-up Date</label>
+              <input id="targetDate" type="date" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label for="srTag">SR Tag</label>
+              <select id="srTag" class="form-select">
+                <option>Capacity-SR-Adhoc-Others</option>
+                <option>Capacity-SR-DB-Sizing-Costing</option>
+                <option>Capacity-SR-Cache-Sizing-Costing</option>
+                <option>Capacity-SR-Server-Sizing-Costing</option>
+                <option>Capacity-SR-K8-Sizing-Costing</option>
+                <option>Capacity-SR-S3-Review</option>
+                <option>Capacity-SR-FQDN-Review</option>
+                <option>Capacity-SR-Rollouts-Assessment</option>
+                <option>Capacity-SR-MSK-Sizing-Cost</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="accent-card">
+          <h5 class="mb-3" style="font-weight:500;">📝 Description</h5>
+          <textarea id="description" class="form-control" placeholder="Enter description..."></textarea>
+        </div>
+      </div> <!-- end right -->
+    </div> <!-- end row -->
+  </div> <!-- end container -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Your JS files -->
+
+<script src="assets/js/defaults.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/calculator.js"></script>
+<script src="assets/js/utils.js"></script>
+</body>
+</html>

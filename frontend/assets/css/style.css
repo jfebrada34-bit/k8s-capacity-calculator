@@ -1,0 +1,199 @@
+/* ----------------------------- */
+/* Base Styles */
+/* ----------------------------- */
+body {
+  background: #f0f2f5;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 18px;
+  color: #111827;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+/* ----------------------------- */
+/* Main Calculator Cards */
+/* ----------------------------- */
+.card-custom {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.accent-card {
+  background: #eef6ff;
+  border: 1px solid #dbeefe;
+  color: #0f1724;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.accent-card label {
+  font-weight: 400;
+  color: #0f1724;
+}
+
+.accent-card .form-control,
+.accent-card .form-select,
+.accent-card textarea {
+  background: #fff;
+  border: 1px solid #d1e9ff;
+  color: #0f1724;
+}
+
+/* Section Titles inside forms */
+.form-section-title {
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+label, .form-label {
+  font-weight: 400;
+}
+
+/* ----------------------------- */
+/* Buttons */
+/* ----------------------------- */
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+}
+.btn-danger:hover {
+  background-color: #bb2d3b;
+}
+
+.btn-success {
+  background-color: #198754;
+  border: none;
+  color: #fff;
+}
+.btn-success:hover {
+  background-color: #146c43;
+}
+
+/* ----------------------------- */
+/* Results / Table Styles */
+/* ----------------------------- */
+.results-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 2px 6px rgba(2,6,23,0.04);
+}
+
+.summary-card {
+  background: #ffffff;
+  border: 1px solid #e6eefc;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.env-heading {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Table tweaks */
+.table-sm td, .table-sm th {
+  padding: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-color: #e2e8f0;
+}
+
+.table-light th {
+  background-color: #f1f5f9;
+}
+
+.table-responsive {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ----------------------------- */
+/* Finalize Modal Styles */
+/* ----------------------------- */
+#finalizeTable {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+#finalizeTable td,
+#finalizeTable th {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+}
+
+#finalizeTable th {
+  background-color: #f1f5f9;
+  font-weight: 500;
+}
+
+#finalizeSummary,
+#finalizeDetails {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+/* Modal header styling */
+.modal-header {
+  background-color: #198754;
+  color: #fff;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+
+/* Modal footer button spacing */
+.modal-footer .btn {
+  min-width: 90px;
+}
+
+/* Total row highlight */
+#finalizeTable .table-secondary {
+  background-color: #f1f5f9;
+  font-weight: bold;
+}
+
+/* ----------------------------- */
+/* Responsive tweaks */
+/* ----------------------------- */
+@media (max-width: 991px) {
+  .row.g-4 {
+    gap: 18px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
